@@ -8,5 +8,6 @@ router.get('/', (req, res) => {
 });
   
 router.use('/form', require('./quotes'));
+router.use('/contacts', require('./contacts'));
 
 module.exports = router;
