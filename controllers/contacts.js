@@ -96,6 +96,23 @@ const updateContact = async (req, res) => {
         return res.status(400).json({ error: 'Invalid contact ID format' });
     }
 
+    // Validation 
+    if (!firstName || !lastName || !email || !favoriteColor || !birthday || !gender || !nationality) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    if (!email.includes('@')) {
+        return res.status(400).json({ error: 'Invalid email' });
+    }
+
+    if (!/\d{2}\/\d{2}\/\d{4}/.test(birthday)) {
+        return res.status(400).json({ error: 'Use MM/DD/YYYY' });
+    }
+
+    if (!['Male', 'Female', 'Other'].includes(gender)) {
+        return res.status(400).json({ error: 'Invalid gender' });
+    }
+
     try {
         const client = getDb();
         const db = client.db(DATABASE_NAME);
