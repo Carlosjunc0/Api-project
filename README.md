@@ -1,15 +1,15 @@
 # Example collection 1 "Forms"
-    "first_name": "Carlos",
-    "last_name": "Junco",
-    "email": "cj@byupathway.edu",
+    "first_name": "Karina",
+    "last_name": "Moh",
+    "email": "kma@byupathway.edu",
     "phone": "1234567890",
-    "request": "I'd like to eat an hamburger"
+    "request": "I'd like to receive more information"
 
 # Example Collection 2 "Contacts"
-    "firstName": "Carlos",
-    "lastName": "Junco",
-    "email": "cj@byupathway.edu",
-    "favoriteColor": "white",
+    "firstName": "Karen",
+    "lastName": "Stone",
+    "email": "k_4r3n@byupathway.edu",
+    "favoriteColor": "black",
     "birthday": "10/04/2001",
-    "gender": "male",
+    "gender": "Female",
     "nationality": "Mexican"

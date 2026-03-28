@@ -56,35 +56,34 @@ const getContactById = async (req, res) => {
 const createContact = async (req, res) => {
     //#swagger.tags = ['Contacts']
     try {
-        const client = getDb();
-        const db = client.db(DATABASE_NAME);
-        const collection = db.collection(COLLECTION_NAME);
         const { firstName, lastName, email, favoriteColor, birthday, gender, nationality } = req.body;
-        const result = await collection.insertOne({ firstName, lastName, email, favoriteColor, birthday, gender, nationality });
 
+        // Validation 
         if (!firstName || !lastName || !email || !favoriteColor || !birthday || !gender || !nationality) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
         if (!email.includes('@')) {
-            return res.status(400).json({ error: 'Invalid email format' });
+            return res.status(400).json({ error: 'Invalid email' });
         }
 
-        if (birthday.length !== 10 || !/\d{2}\/\d{2}\/\d{4}/.test(birthday)) {
-            return res.status(400).json({ error: 'Invalid birthday format. Use MM/DD/YYYY' });
+        if (!/\d{2}\/\d{2}\/\d{4}/.test(birthday)) {
+            return res.status(400).json({ error: 'Use MM/DD/YYYY' });
         }
 
-        if (gender !== 'Male' && gender !== 'Female' && gender !== 'Other') {
-            return res.status(400).json({ error: 'Invalid gender. Must be Male, Female, or Other' });
+        if (!['Male', 'Female', 'Other'].includes(gender)) {
+            return res.status(400).json({ error: 'Invalid gender' });
         }
 
-        res.status(201).json({ message: 'Contact created', contactId: result.insertedId });
+        const result = await getDb()
+            .db(DATABASE_NAME)
+            .collection(COLLECTION_NAME)
+            .insertOne({ firstName, lastName, email, favoriteColor, birthday, gender, nationality });
+
+        res.status(201).json({ message: 'Contact created', id: result.insertedId });
+
     } catch (error) {
-        console.error('Error creating contact:', error);
-        res.status(500).json({
-            error: 'Failed to create contact',
-            details: error.message
-        });
+        res.status(500).json({ error: 'Server error' });
     }
 };
 

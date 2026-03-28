@@ -125,10 +125,6 @@ const updateForm = async (req, res) => {
             }
         );
 
-        if (!email.includes('@')) {
-            return res.status(400).json({ error: 'Invalid email format' });
-        }
-
         if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Form not found' });
         }
